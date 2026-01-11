@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetMatch", "..\PetMatch\PetMatch.csproj", "{C10C3E7D-DBBC-4FD8-8823-6C03FDB97365}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetMatchMobile", "..\PetMatchMobile\PetMatchMobile.csproj", "{0A9AE978-AE27-455C-B3A4-280F7D9DB28E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C10C3E7D-DBBC-4FD8-8823-6C03FDB97365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C10C3E7D-DBBC-4FD8-8823-6C03FDB97365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C10C3E7D-DBBC-4FD8-8823-6C03FDB97365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C10C3E7D-DBBC-4FD8-8823-6C03FDB97365}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A9AE978-AE27-455C-B3A4-280F7D9DB28E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A9AE978-AE27-455C-B3A4-280F7D9DB28E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A9AE978-AE27-455C-B3A4-280F7D9DB28E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0A9AE978-AE27-455C-B3A4-280F7D9DB28E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A9AE978-AE27-455C-B3A4-280F7D9DB28E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A9AE978-AE27-455C-B3A4-280F7D9DB28E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B68D24B-D305-4555-9623-E930968A9A03}
+	EndGlobalSection
+EndGlobal
