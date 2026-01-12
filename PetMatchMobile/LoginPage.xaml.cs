@@ -11,32 +11,33 @@ namespace PetMatchMobile
             InitializeComponent();
         }
 
-        async void OnLoginClicked(object sender, EventArgs e)
+        private async void OnLoginClicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(EmailEntry.Text) || string.IsNullOrEmpty(PassEntry.Text))
-            {
-                await DisplayAlert("Eroare", "Scrie email și parola", "OK");
-                return;
-            }
+            string email = EmailEntry.Text;
+            string password = PasswordEntry.Text;
 
-            // Acum, după modificarea din Program.cs, asta va merge!
-            bool success = await _service.LoginAsync(EmailEntry.Text, PassEntry.Text);
+            bool success = await _service.LoginAsync(email, password);
 
             if (success)
             {
-                // Intră în aplicație
-                Application.Current.MainPage = new NavigationPage(new MainPage());
+                Preferences.Set("UserEmail", email);
+
+                Application.Current.MainPage = new MainPage();
             }
             else
             {
-                await DisplayAlert("Ups", "Email sau parolă greșită.", "Încearcă iar");
+                await DisplayAlert("Eroare", "Email sau parolă greșită!", "OK");
             }
+        }
+        private void OnGuestClicked(object sender, EventArgs e)
+        {
+            Preferences.Set("UserEmail", "guest@test.com");
+            Application.Current.MainPage = new MainPage();
         }
 
         async void OnRegisterClicked(object sender, EventArgs e)
         {
-            // Facem cont direct din aplicatie (NATIV)
-            bool success = await _service.RegisterAsync(EmailEntry.Text, PassEntry.Text);
+            bool success = await _service.RegisterAsync(EmailEntry.Text, PasswordEntry.Text);
             if (success)
             {
                 await DisplayAlert("Succes", "Cont creat! Acum te poți loga.", "OK");

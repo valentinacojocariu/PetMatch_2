@@ -19,15 +19,12 @@ namespace PetMatch.Controllers
             _context = context;
         }
 
-        // GET: api/Animals
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetAnimals()
         {
-            // Aici facem "Traducerea" finală:
             var animals = await _context.Animal
                 .Select(a => new
                 {
-                    // Datele simple
                     ID = a.ID,
                     Name = a.Name,
                     ImageUrl = a.ImageUrl,
@@ -37,15 +34,10 @@ namespace PetMatch.Controllers
                     IsAdopted = a.IsAdopted,
                     RescueDate = a.RescueDate,
 
-                    // --- PARTEA CRITICĂ ---
-                    // Luăm "Name" din Baza de Date (Category.Name)
-                    // Și îl trimitem ca "CategoryName" către telefon
                     CategoryName = a.Category != null ? a.Category.Name : "Necunoscut",
 
-                    // La fel și pentru Adăpost
                     ShelterName = a.Shelter != null ? a.Shelter.Name : "Fără Adăpost",
 
-                    // ID-urile pentru siguranță
                     CategoryID = a.CategoryID,
                     ShelterID = a.ShelterID
                 })
@@ -54,7 +46,6 @@ namespace PetMatch.Controllers
             return Ok(animals);
         }
 
-        // GET: api/Animals/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Animal>> GetAnimal(int id)
         {
@@ -68,7 +59,6 @@ namespace PetMatch.Controllers
             return animal;
         }
 
-        // POST: api/Animals
         [HttpPost]
         public async Task<ActionResult<Animal>> PostAnimal(Animal animal)
         {
@@ -78,7 +68,6 @@ namespace PetMatch.Controllers
             return CreatedAtAction("GetAnimal", new { id = animal.ID }, animal);
         }
 
-        // DELETE: api/Animals/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnimal(int id)
         {
@@ -94,7 +83,6 @@ namespace PetMatch.Controllers
             return NoContent();
         }
 
-        // PUT: api/Animals/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAnimal(int id, Animal animal)
         {

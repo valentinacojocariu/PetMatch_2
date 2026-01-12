@@ -9,10 +9,25 @@
         <Label Text="PetMatch 🐾" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#333"/>
         <Label Text="Bine ai revenit!" FontSize="18" TextColor="Gray" HorizontalOptions="Center" Margin="0,0,0,20"/>
 
-        <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" TextColor="Black" BackgroundColor="#f0f0f0"/>
-        <Entry x:Name="PassEntry" Placeholder="Parola" IsPassword="True" TextColor="Black" BackgroundColor="#f0f0f0"/>
+        <Entry x:Name="EmailEntry" 
+               Placeholder="Email" 
+               Keyboard="Email"
+               BackgroundColor="White" />
 
-        <Button Text="Intră în cont" BackgroundColor="#FFC107" TextColor="Black" CornerRadius="10" Clicked="OnLoginClicked"/>
-        <Button Text="Creează cont nou" BackgroundColor="Transparent" TextColor="Gray" Clicked="OnRegisterClicked"/>
+        <Entry x:Name="PasswordEntry" 
+               Placeholder="Parola" 
+               IsPassword="True"
+               BackgroundColor="White" />
+
+        <Button Text="Login" 
+                Clicked="OnLoginClicked" 
+                BackgroundColor="#2196F3" 
+                TextColor="White" 
+                CornerRadius="10"/>
+
+        <Button Text="Intră fără cont (Test)" 
+                Clicked="OnGuestClicked" 
+                BackgroundColor="Transparent" 
+                TextColor="Gray" />
     </StackLayout>
 </ContentPage>

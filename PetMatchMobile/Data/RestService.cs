@@ -9,7 +9,6 @@ namespace PetMatchMobile.Data
     {
         HttpClient _client;
         JsonSerializerOptions _options;
-        // ATENȚIE: 10.0.2.2 pentru Android Emulator, localhost pentru Windows
         string BaseUrl = DeviceInfo.Platform == DevicePlatform.Android ? "https://10.0.2.2:7198" : "https://localhost:7198";
 
         public RestService()
@@ -20,23 +19,24 @@ namespace PetMatchMobile.Data
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
+        
         public async Task<bool> LoginAsync(string email, string password)
         {
-            var json = JsonSerializer.Serialize(new { Email = email, Password = password });
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            // Stergem try/catch de aici ca să vedem eroarea în LoginPage
-            var response = await _client.PostAsync($"{BaseUrl}/api/auth/login", content);
-
-            // Verificăm ce zice serverul
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                // Opțional: Poți vedea în debug exact ce cod dă (ex: 500, 404)
-                var errorContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Eroare Server: {response.StatusCode} - {errorContent}");
-            }
+                var loginData = new { Email = email, Password = password };
+                var json = JsonSerializer.Serialize(loginData);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            return response.IsSuccessStatusCode;
+                var response = await _client.PostAsync($"{BaseUrl}/api/Auth/login", content);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Eroare Login: {ex.Message}");
+                return false;
+            }
         }
         public async Task<bool> RegisterAsync(string email, string password)
         {
@@ -69,7 +69,6 @@ namespace PetMatchMobile.Data
                 var json = JsonSerializer.Serialize(requestData);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                // ATENȚIE: URL-ul s-a schimbat puțin, acum include "AdoptionApi"
                 var response = await _client.PostAsync($"{BaseUrl}/api/AdoptionApi/request", content);
 
                 return response.IsSuccessStatusCode;
@@ -79,6 +78,15 @@ namespace PetMatchMobile.Data
                 Console.WriteLine($"Eroare: {ex.Message}");
                 return false;
             }
+        }
+        public async Task<NotificationModel> CheckStatusAsync(string email)
+        {
+            try
+            {
+                var response = await _client.GetStringAsync($"{BaseUrl}/api/AdoptionApi/check-status?email={email}");
+                return JsonSerializer.Deserialize<NotificationModel>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            catch { return new NotificationModel { HasUpdate = false }; }
         }
     }
 }

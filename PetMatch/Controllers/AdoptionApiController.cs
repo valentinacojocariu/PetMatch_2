@@ -21,34 +21,61 @@ namespace PetMatch.Controllers
         {
             if (request == null) return BadRequest();
 
-            // 1. Căutăm Membrul după email (În tabelul Member, nu Users)
-            // Sper că ai coloana 'Email' în clasa Member!
             var member = await _context.Member.FirstOrDefaultAsync(m => m.Email == request.UserEmail);
 
             if (member == null)
             {
-                return BadRequest("Nu am găsit un membru cu acest email. Asigură-te că ai datele completate în profil.");
+                member = new Member
+                {
+                    Email = request.UserEmail,
+                    FullName = "Utilizator Mobil"
+                };
+                _context.Member.Add(member);
+                await _context.SaveChangesAsync();
             }
 
-            // 2. Căutăm Animalul folosind ID (mare)
             var animal = await _context.Animal.FirstOrDefaultAsync(a => a.ID == request.AnimalID);
+            if (animal == null) return BadRequest("Animalul nu mai este disponibil.");
 
-            if (animal == null) return BadRequest("Animalul nu există.");
-
-            // 3. Creăm cererea folosind numele tale (AnimalID, MemberID)
             var newRequest = new AdoptionRequest
             {
-                MemberID = member.ID,      // <--- Aici era problema (MemberID vs UserId)
-                AnimalID = animal.ID,      // <--- Aici era problema (AnimalID vs AnimalId)
+                MemberID = member.ID,
+                AnimalID = animal.ID,
                 RequestDate = DateTime.Now,
                 Status = "Pending",
-                Message = "Cerere din aplicatia mobila"
+                Message = "Cerere trimisă din aplicația mobilă"
             };
 
             _context.AdoptionRequest.Add(newRequest);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Succes!" });
+        }
+        [HttpGet("check-status")]
+        public async Task<IActionResult> CheckStatus(string email)
+        {
+            var member = await _context.Member.FirstOrDefaultAsync(m => m.Email == email);
+            if (member == null) return Ok(new { hasUpdate = false });
+
+            var request = await _context.AdoptionRequest
+                .Include(r => r.Animal)
+                .Where(r => r.MemberID == member.ID && (r.Status == "Approved" || r.Status == "Acceptat"))
+                .OrderByDescending(r => r.RequestDate)
+                .FirstOrDefaultAsync();
+
+            if (request != null)
+            {
+                string animalName = request.Animal != null ? request.Animal.Name : "animalul";
+
+                return Ok(new
+                {
+                    hasUpdate = true,
+                    requestId = request.ID, 
+                    message = $"Felicitări! Cererea pentru {animalName} a fost acceptată! Vino la adăpost."
+                });
+            }
+
+            return Ok(new { hasUpdate = false });
         }
     }
 }
