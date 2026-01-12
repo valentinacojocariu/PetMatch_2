@@ -1,4 +1,5 @@
-﻿using PetMatchMobile.Data;
+﻿using Microsoft.Maui.ApplicationModel.Communication;
+using PetMatchMobile.Data;
 using PetMatchMobile.Models;
 
 namespace PetMatchMobile
@@ -8,6 +9,10 @@ namespace PetMatchMobile
         private List<Animal> _animals = new();
         private int _index = 0;
         private RestService _service = new RestService();
+
+        // AICI AM ADĂUGAT EMAIL-UL (ca să nu mai dea eroare că lipsește)
+        // Într-o aplicație finală, acesta ar veni din pagina de Login.
+        private string userEmail = "test@yahoo.com";
 
         // Proprietate pentru Binding
         private Animal _currentAnimal;
@@ -35,31 +40,50 @@ namespace PetMatchMobile
         }
 
         void OnNopeClicked(object sender, EventArgs e) => ShowNext();
+
         void OnLogoutClicked(object sender, EventArgs e)
         {
             Application.Current.MainPage = new LoginPage();
         }
+
+        // --- AICI ESTE MODIFICAREA PRINCIPALĂ ---
         async void OnLikeClicked(object sender, EventArgs e)
         {
-            if (!IsAdoptable) return;
+            // 1. Verificări de siguranță
+            if (!IsAdoptable || CurrentAnimal == null) return;
 
-            // Trimite cererea catre admin
-            await _service.SendAdoptionRequest(CurrentAnimal.ID, "user@test.com"); // Aici ai pune emailul real al userului logat
+            // 2. Trimite cererea catre admin
+            // Folosim CurrentAnimal.ID (mare) și userEmail definit sus
+            bool success = await _service.SendAdoptionRequestAsync(CurrentAnimal.ID, userEmail);
 
-            await DisplayAlert("Felicitări! 🐾", "Cererea ta a fost trimisă către admin. Vei primi o notificare când se aprobă.", "OK");
-            ShowNext();
+            // 3. Verificăm rezultatul
+            if (success)
+            {
+                await DisplayAlert("Felicitări! 🐾", "Cererea ta a fost trimisă către admin. Vei primi o notificare când se aprobă.", "OK");
+                ShowNext(); // Trecem la următorul doar dacă a mers
+            }
+            else
+            {
+                await DisplayAlert("Eroare", "Nu s-a putut trimite cererea. Verifică conexiunea.", "OK");
+            }
         }
 
         async void OnInfoClicked(object sender, EventArgs e)
         {
-            await DisplayAlert($"Despre {CurrentAnimal.Name}",
-                $"Descriere: {CurrentAnimal.Description}\n\nAdăpost: {CurrentAnimal.ShelterName}", "Închide");
+            if (CurrentAnimal != null)
+            {
+                await DisplayAlert($"Despre {CurrentAnimal.Name}",
+                    $"Descriere: {CurrentAnimal.Description}\n\nAdăpost: {CurrentAnimal.ShelterName}", "Închide");
+            }
         }
 
         void ShowNext()
         {
             _index++;
-            if (_index < _animals.Count) CurrentAnimal = _animals[_index];
+            if (_index < _animals.Count)
+            {
+                CurrentAnimal = _animals[_index];
+            }
             else
             {
                 CurrentAnimal = null;

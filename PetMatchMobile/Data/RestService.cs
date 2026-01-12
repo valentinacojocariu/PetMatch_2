@@ -61,11 +61,24 @@ namespace PetMatchMobile.Data
             return new List<Animal>();
         }
 
-        public async Task SendAdoptionRequest(int animalId, string email)
+        public async Task<bool> SendAdoptionRequestAsync(int animalID, string email)
         {
-            var json = JsonSerializer.Serialize(new { AnimalId = animalId, UserEmail = email });
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            await _client.PostAsync($"{BaseUrl}/api/Adoption/request", content);
+            try
+            {
+                var requestData = new { AnimalId = animalID, UserEmail = email };
+                var json = JsonSerializer.Serialize(requestData);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                // ATENȚIE: URL-ul s-a schimbat puțin, acum include "AdoptionApi"
+                var response = await _client.PostAsync($"{BaseUrl}/api/AdoptionApi/request", content);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Eroare: {ex.Message}");
+                return false;
+            }
         }
     }
 }

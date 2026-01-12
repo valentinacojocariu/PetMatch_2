@@ -41,5 +41,4 @@ namespace PetMatch.Controllers
         }
     }
 
-    public class AdoptionRequestDto { public int AnimalId { get; set; } public string UserEmail { get; set; } }
 }

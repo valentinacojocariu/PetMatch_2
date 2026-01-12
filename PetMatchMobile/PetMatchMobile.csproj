@@ -47,24 +47,45 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\agapornisi.jpg">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\biscuit.jpg">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\bruno.jpg">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</MauiImage>
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+		<MauiImage Update="Resources\Images\elsa.jpg">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\perla.jpg">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\ricky.jpg">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\rio.jpg">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\rocket.jpg">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</MauiImage>
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiImage Remove="Resources\Images\agapornisi.jpg" />
-	  <MauiImage Remove="Resources\Images\biscuit.jpg" />
-	  <MauiImage Remove="Resources\Images\bruno.jpg" />
-	  <MauiImage Remove="Resources\Images\elsa.jpg" />
-	  <MauiImage Remove="Resources\Images\perla.jpg" />
-	  <MauiImage Remove="Resources\Images\ricky.jpg" />
-	  <MauiImage Remove="Resources\Images\rio.jpg" />
-	  <MauiImage Remove="Resources\Images\rocket.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -79,41 +100,6 @@
 	  <None Remove="Resources\Images\ricky.jpg" />
 	  <None Remove="Resources\Images\rio.jpg" />
 	  <None Remove="Resources\Images\rocket.jpg" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Include="Resources\Images\agapornisi.jpg">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="Resources\Images\biscuit.jpg">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="Resources\Images\bruno.jpg">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="Resources\Images\elsa.jpg">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="Resources\Images\perla.jpg">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="Resources\Images\ricky.jpg">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="Resources\Images\rio.jpg">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="Resources\Images\rocket.jpg">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>

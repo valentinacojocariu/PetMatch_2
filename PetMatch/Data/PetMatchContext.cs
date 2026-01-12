@@ -17,7 +17,7 @@ namespace PetMatch.Data
 
         public DbSet<PetMatch.Models.Animal> Animal { get; set; } = default!;
         public DbSet<PetMatch.Models.Category> Category { get; set; } = default!;
-        public DbSet<PetMatch.Models.AdoptionRequest> AdoptionRequest { get; set; } = default!;
+        public DbSet<AdoptionRequest> AdoptionRequest { get; set; }
         public DbSet<PetMatch.Models.Member> Member { get; set; } = default!;
         public DbSet<PetMatch.Models.Shelter> Shelter { get; set; } = default!;
     }
