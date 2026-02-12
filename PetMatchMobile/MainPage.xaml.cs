@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.ApplicationModel.Communication;
-using PetMatchMobile.Data;
+﻿using PetMatchMobile.Data;
 using PetMatchMobile.Models;
 
 namespace PetMatchMobile
@@ -37,7 +36,7 @@ namespace PetMatchMobile
             Dispatcher.StartTimer(TimeSpan.FromSeconds(5), () =>
             {
                 CheckForUpdates();
-                return true; 
+                return true;
             });
         }
 
@@ -104,20 +103,19 @@ namespace PetMatchMobile
 
         void ShowNext()
         {
-            _index++;
+            if (_animals == null || _animals.Count == 0) return;
+
+            _index++; 
 
             if (_index < _animals.Count)
             {
                 CurrentAnimal = _animals[_index];
             }
             else
+            {
                 _index = 0;
-
-                if (_animals.Count > 0)
-                {
-                    CurrentAnimal = _animals[0];
-                    DisplayAlert("Gata!", "Ai văzut toate animalele. Lista o va lua de la capăt!", "OK");
-                }
+                CurrentAnimal = _animals[_index];
+                DisplayAlert("Gata!", "Ai văzut toate animalele. Lista o va lua de la capăt!", "OK");
             }
         }
     }

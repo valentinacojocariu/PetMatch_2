@@ -9,8 +9,7 @@ namespace PetMatchMobile.Data
     {
         HttpClient _client;
         JsonSerializerOptions _options;
-        string BaseUrl = DeviceInfo.Platform == DevicePlatform.Android ? "https://10.0.2.2:7198" : "https://localhost:7198";
-
+        string BaseUrl = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5147" : "http://localhost:5147";
         public RestService()
         {
             var handler = new HttpClientHandler();
@@ -19,7 +18,7 @@ namespace PetMatchMobile.Data
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
-        
+
         public async Task<bool> LoginAsync(string email, string password)
         {
             try
@@ -30,11 +29,26 @@ namespace PetMatchMobile.Data
 
                 var response = await _client.PostAsync($"{BaseUrl}/api/Auth/login", content);
 
-                return response.IsSuccessStatusCode;
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    var status = response.StatusCode;
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Diagnostic", $"Serverul a raspuns cu: {status}", "OK");
+                    });
+                    return false;
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Eroare Login: {ex.Message}");
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Application.Current.MainPage.DisplayAlert("Eroare Conexiune", ex.Message, "OK");
+                });
                 return false;
             }
         }
